@@ -17,4 +17,4 @@ APIS- register user ✍️
       delete article
       get most recent articles 
       get articles of following users
-      comment on post
+      comment on article
