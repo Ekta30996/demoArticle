@@ -117,15 +117,53 @@ const articleByTopic = async(req,res)=>{
     try
     {
         const id = req.params.id
-        const readArticle = await articleModel.find({"topicId":id})
-        const result = await readArticle.aggregate()
-        res.status(200).json({
-            message:'Real All Article By Topic',
-            article:result
+        const result = await articleModel.aggregate([
+            {
+                '$lookup': {
+                  'from': 'topics', 
+                  'localField': 'topicId', 
+                  'foreignField': '_id', 
+                  'as': 'result1'
+                }
+              }, {
+                '$lookup': {
+                  'from': 'users', 
+                  'localField': 'userId', 
+                  'foreignField': '_id', 
+                  'as': 'result2'
+                }
+              }, {
+                '$match': {
+                  'topicId': '_id'
+                }
+              }, {
+                '$project': {
+                  'title': 1, 
+                  'description': 1, 
+                  'topicid': {
+                    '$first': '$result1._id'
+                  }, 
+                  'topicName': {
+                    '$first': '$result1.topicName'
+                  }, 
+                  'userid': {
+                    '$first': '$result2._id'
+                  }, 
+                  'userName': {
+                    '$first': '$result2.username'
+                  }, 
+                  'createdAt': 1, 
+                  'updatedAt': 1
+                }
+              }
+          ])
+          res.status(200).json({
+            message:'fchg',
+            result
         })
     }catch(err){
         res.status(500).json({
-            message:'',
+            message:'error',
             err
         })
     }
