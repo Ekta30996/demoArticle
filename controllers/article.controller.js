@@ -94,7 +94,19 @@ const articleByUser = async(req,res)=>{
 }
 
 const recentArticle = async(req,res)=>{
-    
+    try{
+        const latest = await articleModel.find().sort({'createdAt':-1}).limit(5)
+        res.status(200).json({
+            message:'Recent Created Articles',
+            latest
+        })
+    }
+   catch(err){
+    res.status(200).json({
+        message:'Error When Read Recent Created Articles',
+        err
+    })
+   }
 }
 
 const followingUserArticle = async(req,res)=>{
@@ -146,7 +158,7 @@ const deleteArticle = async(req,res)=>{
     try
     {
         const id = req.params.id
-        const result = await articleModel.deleteOne(id)
+        const result = await articleModel.findByIdAndRemove({"_id":id})
         res.status(200).json({
             message:'User Delete Successfully!!',
             result
