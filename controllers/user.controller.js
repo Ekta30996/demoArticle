@@ -11,6 +11,10 @@ const signUp = async(req,res)=>{
         return res.status(409).json({message:'User Already Exists..Please, Try To Login'})
     } 
     //2) Generate hash of password
+    if(password===""||password.length===0)
+    {
+        return res.status(400).json({message:'Password Is Required Field'})
+    }
     const hashPassword = await bcrypt.hash(password,10)
     
     //3) Create a new user

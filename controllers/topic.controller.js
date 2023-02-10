@@ -3,7 +3,8 @@ const createTopic = async(req,res)=>{
     try{
         const {topicName} = req.body
         const newTopic = new topicModel({
-            topicName:topicName
+            topicName:topicName,
+            userId:req.userId
         })
         await newTopic.save()
         res.status(201).json({
