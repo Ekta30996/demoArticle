@@ -54,11 +54,8 @@ const allComment = async(req,res)=>{
                 }, 
                 'title': {
                   '$first': '$result2.title'
-                }, 
-                'description': {
-                  '$first': '$result2.description'
-                }, 
-                'userId': {
+                },  
+                'userid': {
                   '$first': '$result3.username'
                 }
               }

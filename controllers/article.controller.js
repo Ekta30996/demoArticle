@@ -45,13 +45,13 @@ const allArticle = async(req,res)=>{
               '$project': {
                 'title': 1, 
                 'description': 1, 
-                'topicId': {
+                'topicid': {
                   '$first': '$result1._id'
                 }, 
                 'topicName': {
                   '$first': '$result1.topicName'
                 }, 
-                'userId': {
+                'userid': {
                   '$first': '$result2._id'
                 }, 
                 'userName': {
