@@ -13,7 +13,7 @@ APIS- register user✍
       create article ✍
       edit article✍
       get all articles ✍
-      get articles by topic
+      get articles by topic   
       delete article ✍
       get most recent articles ✍
 
