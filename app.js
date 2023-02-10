@@ -1,6 +1,7 @@
 const express = require('express')
 const user = require('./routers/user.router')
 const topic = require('./routers/topic.router')
+const article = require('./routers/article.route')
 const dotenv = require('dotenv')
 dotenv.config()
 const app = express()
@@ -15,8 +16,9 @@ app.use((req,res,next)=>{
 
 app.use('/user',user)
 
-
 app.use('/topic',topic)
+
+app.use('/article',article)
 
 app.listen(PORT , ()=>{
     console.log(`Server is Live On Port ${PORT}`)
