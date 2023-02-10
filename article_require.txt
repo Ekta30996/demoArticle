@@ -14,8 +14,8 @@ APIS- register user✍
       edit article✍
       get all articles ✍
       get articles by topic
-      delete article
-      get most recent articles 
+      delete article ✍
+      get most recent articles ✍
 
       get articles of following users
-      comment on post
+      comment on post✍
