@@ -6,16 +6,16 @@ and can create artical and with selected topic
 and user can follow and unfollow other user. 
 can get articles of the following users and recent article and user can comment on article.
 
-APIS- register user✍
-      login user✍
-      create topic✍
-      get all topics✍
-      create article ✍
-      edit article✍
-      get all articles ✍
-      get articles by topic   
-      delete article ✍
-      get most recent articles ✍
+APIS- register user ✍1)
+      login user ✍2)
+      create topic ✍3)
+      get all topics ✍4)
+      create article  ✍5)
+      edit article ✍6)
+      get all articles ✍7)
+      get articles by topic  ✍8)
+      delete article ✍ 9)
+      get most recent articles ✍10)
 
-      get articles of following users
-      comment on post✍
+      get articles of following users✍11)
+      comment on post ✍12)
