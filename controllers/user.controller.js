@@ -56,6 +56,13 @@ const signIn = async(req,res)=>{
         //1) User is already exists or not
         const {email , password} = req.body
         const userExists = await userModel.findOne({"email":email})
+        if(email===""){
+            return res.status(400).json({message:'Email Is Required Field'})
+        }
+        if(password==="")
+        {
+            return res.status(400).json({message:'Password Is Required Field'})
+        }
         if(!userExists){
             return res.status(404).send( 'User Is Not Exists Please Try To Register First')
         }
