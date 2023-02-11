@@ -5,7 +5,9 @@ const topicSchema = new mongoose.Schema({
         type:String,
         unique:true,
         trim:true,
-        lowercase:true
+        lowercase:true,
+        match:[new RegExp(/^([a-z]*)$/),'Username Should Starts With Letters']
+
     },
     userId:{
         type:mongoose.Schema.Types.ObjectId,

@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
         trim:true,
         lowercase:true,
         minlength:4,
-        match:[new RegExp(/^[a-z][a-z0-9_-]{3,16}$/),'Username Should Contains Letters , Numbers And Underscore Only']
+        match:[new RegExp(/^([a-z]+[_0-9]{3,16})$/),'Username Should Starts With Letters And Contains Numbers And Underscore Only']
     },
     email:
     {
