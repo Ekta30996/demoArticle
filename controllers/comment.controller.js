@@ -1,7 +1,14 @@
 const commentModel = require('../models/comment.model')
+const ObjectId = require('mongoose').Types.ObjectId
 const createComment = async(req,res)=>{
     try{
             const {topicId,articleId,comment} = req.body
+            if(!ObjectId.isValid(topicId)){
+              return res.send('Invalid Topic ID')
+            }
+            if(!ObjectId.isValid(articleId)){
+              return res.send('Invalid Article ID')
+            }
             const newComment = new commentModel({
             topicId:topicId,
             articleId:articleId,

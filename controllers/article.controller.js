@@ -1,8 +1,13 @@
 const articleModel = require('../models/article.model')
+const ObjectId = require('mongoose').Types.ObjectId
+
 const createArticle = async(req,res)=>{
     try
     {
         const {title,description,topicId} = req.body
+        if(!ObjectId.isValid(topicId)){
+          return res.send('Invalid Topic ID')
+        }
         const newArticle = new articleModel({
             title:title,
             description:description,
@@ -109,14 +114,15 @@ const recentArticle = async(req,res)=>{
    }
 }
 
-const followingUserArticle = async(req,res)=>{
-    
-}
+
 
 const articleByTopic = async(req,res)=>{
     try
     {
         const id = req.params.id
+        if(!ObjectId.isValid(id)){
+          return res.send('Invalid Topic ID')
+        }
         const result = await articleModel.aggregate([
             {
                 '$lookup': {
@@ -132,11 +138,13 @@ const articleByTopic = async(req,res)=>{
                   'foreignField': '_id', 
                   'as': 'result2'
                 }
-              }, {
-                '$match': {
-                  'topicId': '_id'
-                }
-              }, {
+              },{
+                '$match': 
+                  {
+                    'topicId': new ObjectId(id)
+                  }
+                },
+                {
                 '$project': {
                   'title': 1, 
                   'description': 1, 
@@ -158,7 +166,7 @@ const articleByTopic = async(req,res)=>{
               }
           ])
           res.status(200).json({
-            message:'fchg',
+            message:'Read Articles By Topic Name',
             result
         })
     }catch(err){
@@ -173,6 +181,10 @@ const updateArticle = async(req,res)=>{
     try{
             const id = req.params.id
             const {description} = req.body
+            if(!ObjectId.isValid(id)){
+              return res.send('Invalid Article ID')
+            }
+            
             const updateArticle={
                 description:description
             }
@@ -196,6 +208,9 @@ const deleteArticle = async(req,res)=>{
     try
     {
         const id = req.params.id
+        if(ObjectId.isValid(id)){
+          res.send('Invalid Article ID')()
+        }
         const result = await articleModel.findByIdAndRemove({"_id":id})
         res.status(200).json({
             message:'User Delete Successfully!!',
@@ -219,5 +234,4 @@ module.exports = {
     articleByUser,
     articleByTopic,
     recentArticle,
-    followingUserArticle
 }

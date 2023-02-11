@@ -11,9 +11,19 @@ const signUp = async(req,res)=>{
         return res.status(409).json({message:'User Already Exists..Please, Try To Login'})
     } 
     //2) Generate hash of password
-    if(password===""||password.length===0)
+    if(username==="")
+    {
+        return res.status(400).json({message:'Username Is Required Field'})
+    }
+    if(email===""){
+        return res.status(400).json({message:'Email Is Required Field'})
+    }
+    if(password==="")
     {
         return res.status(400).json({message:'Password Is Required Field'})
+    }
+    if(password.length===0||password.length<8){
+        return res.status(400).json({message:'Password Is Minimum To 8 Characters'})
     }
     const hashPassword = await bcrypt.hash(password,10)
     
