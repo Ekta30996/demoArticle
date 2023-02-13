@@ -103,7 +103,9 @@ const articleByUser = async(req,res)=>{
 
 const recentArticle = async(req,res)=>{
     try{
-        const latest = await articleModel.find().sort({'createdAt':-1}).limit(5)
+        const limit = req.query.limit;
+        console.log(limit)
+        const latest = await articleModel.find().sort({'createdAt':-1}).limit(limit)
         res.status(200).json({
             message:'Recent Created Articles',
             latest
@@ -211,8 +213,8 @@ const deleteArticle = async(req,res)=>{
     try
     {
         const id = req.params.id
-        if(ObjectId.isValid(id)){
-          res.send('Invalid Article ID')()
+        if(!ObjectId.isValid(id)){
+          res.status(400).send('Invalid Article ID')
         }
         const result = await articleModel.findByIdAndRemove({"_id":id})
         res.status(200).json({
