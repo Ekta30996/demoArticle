@@ -22,8 +22,8 @@ const signUp = async(req,res)=>{
     {
         return res.status(400).json({message:'Password Is Required Field'})
     }
-    if(password.length===0||password.length<8){
-        return res.status(400).json({message:'Password Is Minimum To 8 Characters'})
+    if(password.length===0||password.length<6){
+        return res.status(400).json({message:'Password Is Minimum To 6 Characters'})
     }
     const hashPassword = await bcrypt.hash(password,10)
     
@@ -87,7 +87,6 @@ const signIn = async(req,res)=>{
         })
         console.log("Error When User Signin:",err)
     }
-    
 }
 module.exports = {
     signUp,

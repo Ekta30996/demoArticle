@@ -5,6 +5,9 @@ const createArticle = async(req,res)=>{
     try
     {
         const {title,description,topicId} = req.body
+        if(!topicId){
+          res.status(400).send('Topic Id Is Required Field')
+        }
         if(!ObjectId.isValid(topicId)){
           return res.send('Invalid Topic ID')
         }

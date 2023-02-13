@@ -4,10 +4,12 @@ const createFollowers = async(req,res) =>{
     try
     {
         const {follower} = req.body
+        if(follower===""){
+          return res.send('Follower Id Is Required Field')
+        }
         if(!ObjectId.isValid(follower)){
           return res.send('Invalid Follower ID')
         }
-        
         const followerExists = await followModel.findOne({"follower":follower})
         if(followerExists){
             return res.status(409).json({
