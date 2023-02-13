@@ -10,12 +10,12 @@ const createFollowers = async(req,res) =>{
         if(!ObjectId.isValid(follower)){
           return res.send('Invalid Follower ID')
         }
-        const followerExists = await followModel.findOne({"follower":follower})
-        if(followerExists){
-            return res.status(409).json({
-                message:'Uh Have Already Follows Them'
-            })
-        }
+        // const followerExists = await followModel.findOne({"follower":follower})
+        // if(followerExists){
+        //     return res.status(409).json({
+        //         message:'Uh Have Already Follows Them'
+        //     })
+        // }
         const newFollower = new followModel({
             follower:follower,
             followee : req.userId,
@@ -114,8 +114,13 @@ const createUnfollowers = async(req,res)=>{
 
 const followingUserArticle = async(req,res)=>{
   try{
+      const id = req.userId
       const followersArticles = await followModel.aggregate([
         {
+          '$match': {
+            'userId': new ObjectId(id)
+          }
+        }, {
           '$lookup': {
             'from': 'users', 
             'localField': 'follower', 
@@ -136,6 +141,8 @@ const followingUserArticle = async(req,res)=>{
           }
         }
       ])
+      console.log(id)
+      console.log("Article of followers:",followersArticles)
       res.status(200).json({
         message:'Your Followers Articles',
         followersArticles
