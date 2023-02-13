@@ -7,7 +7,7 @@ const articleSchema = new mongoose.Schema({
         required:true,
         lowercase:true,
         minlegth:4,
-        match:[new RegExp(/^([a-z0-9+\s]||[a-z+\s()&-_]{5,50})$/),'Article Title Is Invalid']
+        match:[new RegExp(/^([a-z0-9+\s]||[a-z+\s()?&-_]{5,50})$/),'Article Title Is Invalid']
     },
     description:{
         type:String,
