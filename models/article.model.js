@@ -1,6 +1,5 @@
 require('../dbConnection/dbConn')
 const mongoose = require('mongoose') 
-const ObjectId = require('mongoose').Types.ObjectId
 const articleSchema = new mongoose.Schema({
     title:{
         type:String,
@@ -8,15 +7,15 @@ const articleSchema = new mongoose.Schema({
         required:true,
         lowercase:true,
         minlegth:4,
-       // match:[new RegExp(/^[-a-z0-9,\/()&:. ]*[a-z][-a-z0-9,\/()&:. ]*$/i)]
+        match:[new RegExp(/^([a-z0-9+\s]||[a-z+\s()&-_]{5,50})$/),'Article Title Is Invalid']
     },
     description:{
         type:String,
         trim:true,
-        minlegth:50,
         required:true,
         lowercase:true,
-        //match:[new RegExp('^[a-z0-9](?!.*?[^\na-z0-9]{2}).*?[a-z0-9]$'),'Use Letters Only']
+        minlegth:50,
+        maxlength:2000
     },
     topicId:{
         type:mongoose.Schema.Types.ObjectId,

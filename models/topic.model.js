@@ -6,7 +6,7 @@ const topicSchema = new mongoose.Schema({
         unique:true,
         trim:true,
         lowercase:true,
-
+        match:[new RegExp(/^([a-z]||[a-z+\s()&-_]{4,20})$/)]
     },
     userId:{
         type:mongoose.Schema.Types.ObjectId,

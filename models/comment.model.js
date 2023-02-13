@@ -20,7 +20,8 @@ const commentSchema = new mongoose.Schema({
         type:String,
         required:true,
         trim:true,
-        lowercase:true
+        lowercase:true,
+        match:[new RegExp(/^([a-zA-Z+\s]+[!]+)$/),'Please Write Valid Comments']
     }},{timestamps:true})
 
     module.exports = mongoose.model("comment",commentSchema)
