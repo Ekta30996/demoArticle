@@ -24,7 +24,7 @@ app.use('/article',article)
 
 app.use('/comment',comment)
 
-app.use('/',follow)
+//app.use('/',follow)
 
 app.listen(PORT , ()=>{
     console.log(`Server is Live On Port ${PORT}`)
