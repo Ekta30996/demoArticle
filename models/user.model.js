@@ -19,6 +19,15 @@ const userSchema = new mongoose.Schema({
     password:{
         type:String,
         trim:true,
-    }},{timestamps:true})
+    },
+    following:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'user'
+    }],
+    followers:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'user'
+    }],
+},{timestamps:true})
 
 module.exports = mongoose.model('user',userSchema)
