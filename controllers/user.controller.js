@@ -1,6 +1,7 @@
 const userModel = require('../models/user.model')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+var ObjectId = require('mongoose').Types.ObjectId
 
 const signUp = async(req,res)=>{
     try{
@@ -88,7 +89,77 @@ const signIn = async(req,res)=>{
         console.log("Error When User Signin:",err)
     }
 }
+
+const createFollower = async(req,res)=>{
+    try{
+        let id=req.userId
+        let iFollowed = await userModel.findByIdAndUpdate({"_id":id},
+        {$push:{following:req.body.followingId}},{new:true})
+        let followedMe = await userModel.findByIdAndUpdate({"_id":req.body.followingId},
+        {$push:{followers:req.body.followingId}},{new:true})
+        res.status(200).json({
+            message:"User Follow Successfully!!",
+            iFollowed,  
+            followedMe
+        })
+    }catch(err){
+        res.status(500).json({
+            message:"Error When User Follow",
+            err,
+        })
+
+    }
+}
+
+const createUnfollow = async(req,res)=>{
+    try{
+        let id=req.userId
+        let iFollowed = await userModel.findByIdAndUpdate({"_id":id},
+        {$pull:{following:req.body.followingId}},{new:true})
+        let followedMe = await userModel.findByIdAndUpdate({"_id":req.body.followingId},
+        {$pull:{followers:req.body.followingId}},{new:true})
+        res.status(200).json({
+            message:"User Unfollow Successfully!!",
+            iFollowed,
+            followedMe
+        })
+    }catch(err){
+        res.status(500).json({
+            message:"Error When User Unfollow",
+            err,
+        })
+    }
+}
+
+const articleOfFollowing = async(req,res)=>{
+    const id = req.userId
+    const followersData = await userModel.aggregate([
+      {
+        '$match': {
+          '_id': new ObjectId(id)
+        }
+      }, {
+        '$lookup': {
+          'from': 'articles', 
+          'localField': 'following', 
+          'foreignField': 'userId', 
+          'as': 'result'
+        }
+      }, {
+        '$project': {
+          'result': 1
+        }
+      }
+    ])
+  res.status(200).json({
+    message:'Following Users Articles',
+    followersData
+})
+}
 module.exports = {
     signUp,
-    signIn
+    signIn,
+    createFollower,
+    createUnfollow,
+    articleOfFollowing
 }

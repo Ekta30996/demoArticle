@@ -119,8 +119,6 @@ const recentArticle = async(req,res)=>{
    }
 }
 
-
-
 const articleByTopic = async(req,res)=>{
     try
     {
@@ -239,4 +237,5 @@ module.exports = {
     articleByUser,
     articleByTopic,
     recentArticle,
+    
 }
